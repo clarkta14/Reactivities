@@ -15,9 +15,10 @@ interface Props { // this is <ActivityDashboard ***activities={input}*** />
     closeForm: () => void;
     createOrEdit: (activity: Activity) => void;
     deleteActivity: (id: string) => void;
+    submitting: boolean
 }
 
-export default function ActivityDashboard({activities, selectedActivity, deleteActivity,
+export default function ActivityDashboard({activities, selectedActivity, deleteActivity, submitting,
         selectActivity, cancelSelectActivity, editMode, openForm, closeForm, createOrEdit}: Props) { //destructures Props
     return (
         <Grid>
@@ -25,7 +26,8 @@ export default function ActivityDashboard({activities, selectedActivity, deleteA
                 <ActivityList
                     activities={activities}
                     selectActivity={selectActivity}
-                    deleteActivity={deleteActivity}/>
+                    deleteActivity={deleteActivity}
+                    submitting={submitting}/>
             </Grid.Column>
             <Grid.Column width='6'> {/*semantic grids have 16 columns so 10 and 6 is full*/}
                 {selectedActivity && !editMode &&
@@ -35,7 +37,7 @@ export default function ActivityDashboard({activities, selectedActivity, deleteA
                     openForm={openForm}
                 />}
                 {editMode &&
-                <ActivityForm closeForm={closeForm} activity={selectedActivity} createOrEdit={createOrEdit}/>}
+                <ActivityForm closeForm={closeForm} submitting={submitting} activity={selectedActivity} createOrEdit={createOrEdit}/>}
             </Grid.Column>
         </Grid>
     )
